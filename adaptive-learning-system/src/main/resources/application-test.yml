@@ -1,0 +1,57 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: false
+    properties:
+      hibernate:
+        "[format_sql]": false
+
+  flyway:
+    enabled: false
+
+app:
+  jwt:
+    secret: test-secret-key-that-is-long-enough-for-hmac-sha256-minimum-256-bits!!
+    expiration-ms: 3600000
+  upload:
+    dir: ${java.io.tmpdir}/als-test-uploads
+  security:
+    cors:
+      allowed-origins: http://localhost:5173
+    cookie:
+      secure: false
+
+ai:
+  enabled: false
+  gemini:
+    api-key: test-disabled
+    embedding-model: text-embedding-004
+    chat-model: gemini-3-flash-preview
+    max-tokens: 1000
+    temperature: 0.3
+  qdrant:
+    host: localhost
+    port: 6334
+    collection: als_documents
+  rag:
+    chunk-size: 2000
+    chunk-overlap: 200
+    top-k: 5
+
+logging:
+  level:
+    root: WARN
+    "[dz.edu.univconstantine2.ntic.als]": INFO
+    "[org.springframework.security]": WARN

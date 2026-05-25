@@ -1,0 +1,27 @@
+package dz.edu.univconstantine2.ntic.als.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+/**
+ * Configuration class setting up Spring Beans and security behaviors for Web management.
+ */
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addResourceHandlers(@org.springframework.lang.NonNull ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/static/");
+    }
+
+    @Override
+    public void addViewControllers(@org.springframework.lang.NonNull ViewControllerRegistry registry) {
+        registry.addViewController("/{path:[^\\.]*}")
+                .setViewName("forward:/index.html");
+        registry.addViewController("/**/{path:[^\\.]*}")
+                .setViewName("forward:/index.html");
+    }
+}
